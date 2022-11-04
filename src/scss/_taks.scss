@@ -1,0 +1,29 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+main {
+  flex: 1 1 0%;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+
+  & .task-list {
+    padding: 1rem;
+
+    & h2 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: v.$grey;
+      margin-bottom: 1rem;
+    }
+
+    & #tasks {
+      display: flex;
+      justify-content: space-between;
+      background-color: v.$darkest;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+body {
+  @include m.flex;
+  min-height: 100vh;
+  color: #fff;
+  background-color: v.$dark;
+}
+
+header {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+
+  & h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: v.$grey;
+    margin-bottom: 1rem;
+  }
+
+  & #new-task-form {
+    display: flex;
+  }
+
+  //   input,
+  //   button {
+  //     appearance: none;
+  //     border: none;
+  //     outline: none;
+  //     background: none;
+  //   }
+
+  & #new-task-input {
+    flex: 1 1 0%;
+    background-color: v.$darker;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    color: v.$light;
+    font-size: 1.25rem;
+  }
+
+  & #new-task-input::placeholder {
+    color: v.$grey;
+  }
+
+  & #new-task-submit {
+    color: v.$pink;
+    font-size: 1.25rem;
+    font-weight: 700;
+    background-image: linear-gradient(to right, v.$pink, v.$purple);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+
+  & #new-task-submit:hover {
+    opacity: 0.8;
+  }
+
+  & #new-task-submit:active {
+    opacity: 0.6;
+  }
+}
