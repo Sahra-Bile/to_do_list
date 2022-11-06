@@ -5,4 +5,88 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+@mixin desktop_flex {
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@mixin button_1 {
+  color: #fe4880;
+  border: 3px solid #fe4880;
+  background-image: linear-gradient(to right, transparent 50%, #fe4880 50%);
+  background-size: 200%;
+  background-position: 0%;
+
+  &:hover {
+    color: #fff;
+    background-position: 100%;
+  }
+}
+
+@mixin button_2 {
+  color: #68dea0;
+  border: 3px solid #68dea0;
+  background-image: linear-gradient(to top, #68dea0 50%, transparent 50%);
+  background-size: 100% 200%;
+  background-position: 0% 0%;
+
+  &:hover {
+    color: #fff;
+    background-position: 0% 100%;
+  }
+}
+
+@mixin button_3 {
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    border-bottom: 3px solid #212121;
+    border-right: 3px solid #212121;
+    transition: all 0.4s, opacity 0.1s 0.4s;
+    opacity: 0;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    border-top: 3px solid #212121;
+    border-left: 3px solid #212121;
+    transition: all 0.4s, opacity 0.1s 0.4s;
+    opacity: 0;
+  }
+
+  &:hover:after,
+  :before {
+    width: calc(100% + 15px);
+    height: calc(100% + 15px);
+    transition: all 0.4s, opacity 0.1s;
+    opacity: 1;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: v.$tablet_breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: v.$desktop_breakpoint) {
+    @content;
+  }
 }

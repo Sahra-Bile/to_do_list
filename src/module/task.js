@@ -1,10 +1,11 @@
  export class Task {
  taskName;
  taskId ;
-
- constructor(taskName,taskId){
+ checked;
+ constructor(taskName,taskId,checked){
     this.taskName = taskName;
     this.taskId =  taskId;
+    this.checked = checked;
 
  }
  
