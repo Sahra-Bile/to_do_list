@@ -2,10 +2,9 @@
 @use "mixins" as m;
 
 .top-container {
-  flex: 1 1 0%;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 
   &__text2 {
     font-size: 36px;
@@ -18,41 +17,41 @@
   }
 
   &__container {
-    //! top-div
-    @include m.flex;
-    width: 100%;
-    @include m.desktop_flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
     &__taskList {
       //!ul
-      padding: 2rem;
+      min-width: 30%;
+      list-style: none;
 
       &__todo {
-        //!div
-        @include m.flex;
-        margin: 2rem;
+        margin: 0.5rem;
         background: white;
+        font-size: 1.5rem;
         color: black;
-        font-size: 4rem;
-        padding: 2rem;
-        @include m.desktop_flex;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 1s ease;
 
         &__deletBtn {
+          font-size: 40px;
           @include m.button_1;
-          background: #000;
+          @include m.desktop {
+          }
         }
 
         &__doneBtn {
+          font-size: 40px;
           @include m.button_2;
-          background: #76b041;
         }
 
         &__item {
           //! li
-          @include m.flex;
-          min-width: 50%;
-          list-style: none;
-          padding: 20px;
+          flex: 1;
         }
       }
     }
@@ -65,13 +64,64 @@
     color: black;
     font-family: v.$myFont_family;
     font-size: 2rem;
+  }
+
+  &__sortButton {
+    @include m.button_3;
+    width: 30%;
+    background-color: v.$pink;
+    color: black;
+    font-family: v.$myFont_family;
+    font-size: 2rem;
     margin: 10px;
   }
+
+  &__filter {
+    display: inline-block;
+    color: v.$light;
+    text-align: center;
+    padding: 5px;
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "\25BC";
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.5rem;
+      background: #ff6f47;
+      cursor: pointer;
+      pointer-events: none;
+    }
+
+    &__todoFilter {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      appearance: none;
+      outline: 0;
+      box-shadow: none;
+      border: 0 !important;
+      background-image: none;
+      color: #ff6f47;
+      font-family: "Poppins", sans-serif;
+      cursor: pointer;
+      width: 15rem;
+    }
+  }
 }
-//!toggle
+
+// //!toggle
 .done {
   text-decoration: line-through;
   -webkit-text-decoration: line-through;
-  text-decoration-color: v.$pink;
-  -webkit-text-decoration-color: v.$pink;
+  text-decoration-color: v.$green;
+  -webkit-text-decoration-color: v.$green;
+}
+
+.fa-trash,
+.fa-check {
+  pointer-events: none;
 }

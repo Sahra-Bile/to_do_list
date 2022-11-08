@@ -4,19 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- endast css från bootstrap -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
+      rel="stylesheet" />
+    <link
       rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
       crossorigin="anonymous" />
-
-    <!-- JavaScript Bundle with Popper  from Bootstrap-->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-      crossorigin="anonymous"></script>
 
     <title>Todo list</title>
 
@@ -26,30 +21,20 @@
   <body>
     <header class="header">
       <h1 class="header__text">Todo list</h1>
-      <form id="new-task-form" class="header__form">
-        <input
-          type="text"
-          name="new-task-input"
-          id="new-task-input"
-          class="header__form__input"
-          placeholder="what have you planned?" />
-
-        <button
-          id="new-task-submit"
-          value="Add task"
-          class="header__form__addButton">
-          Add task
-        </button>
-      </form>
     </header>
+    <form id="new-task-form" class="form">
+      <input
+        type="text"
+        name="new-task-input"
+        id="new-task-input"
+        class="form__input"
+        placeholder="what have you planned?" />
+    </form>
     <section class="top-container">
       <h2 class="top-container__text2">Tasks</h2>
       <div class="top-container__container" id="todo-container">
         <ul class="top-container__container__taskList" id="task-list"></ul>
       </div>
-      <button id="deleteAll" class="top-container__deleteAll_Btn" type="button">
-        Delete all
-      </button>
     </section>
   </body>
 </html>

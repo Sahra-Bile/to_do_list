@@ -3,7 +3,7 @@
 @mixin flex {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -11,7 +11,7 @@
 @mixin desktop_flex {
   @include desktop {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
   }
 }
 
@@ -43,6 +43,9 @@
 
 @mixin button_3 {
   position: relative;
+  background-color: v.$pink;
+  font-size: 2rem;
+  height: 80px;
 
   &:after {
     content: "";
@@ -80,7 +83,7 @@
 }
 
 @mixin tablet {
-  @media screen and (min-width: v.$tablet_breakpoint) {
+  @media screen and (min-width: v.$tablet_breakpont) {
     @content;
   }
 }
