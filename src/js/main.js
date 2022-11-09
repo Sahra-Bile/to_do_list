@@ -1,7 +1,6 @@
  
 import{Task} from "../module/task";
 
-
 //! alla todo skall placera denna array
 let myList = [];
  
@@ -38,146 +37,135 @@ const createHTML = () =>{
        deleteButton.classList.add('top-container__container__taskList__todo__deletBtn');  
        todoTaskDiv.appendChild(deleteButton); 
 
-
-      deleteButton.addEventListener("click", removeLocalTodos);
-       
+      deleteButton.addEventListener("click", ()=>{
+        removeLocalTodos(i)
+      });
+    
     }
   console.log(myList);
 }
   
- //! skapa en ny todolist
-
- function AddNewTodo(event){
-  event.preventDefault(); //! avbryter händelsen om den är avbrytbar
-  
-    let addedTask = new Task (taskInput.value, Math.random(), 
-    Task.value, Date.now()); //! metoden ger mig en rondom id 
-  
-      //! om taskInput är tomt 
-      if (taskInput.value ==="") {
-       alert("OBS: fyll en task i fältet");
-          return false;
-      } else{
-  
-        myList.push(addedTask);
-        addToLocalStorage();
-        taskInput.value = ""; //! rensar inputfältet så att man kan lägga till en ny task
-        createHTML();
+function AddNewTodo(event){
+    event.preventDefault(); //! Avbryter händelsen om den är avbrytbar, vilket innebär att standardåtgärden som hör till händelsen inte kommer att inträffa
+    
+      let addedTask = new Task (taskInput.value, Math.random()); //! metoden ger mig en rondom id 
+    
+        //! om taskInput är tomt 
+        if (taskInput.value ==="") {
+         alert("OBS: fyll en task i fältet");
+            return false;
+        } else{
+    
+          myList.push(addedTask);
+          addToLocalStorage();
+          createHTML();
+          taskInput.value = ""; //! rensar inputfältet så att man kan lägga till en ny task
+         
       } 
-  }
+    }
 
    let addTaskButton = document.createElement('button');
    addTaskButton.innerHTML = 'Add task';
    addTaskButton.classList.add("form__addButton");
    taskForm.appendChild(addTaskButton);
-
-
   addTaskButton.addEventListener("click", AddNewTodo);  //! lyssna addTask knappen 
 
-
-  //! funktion för att spara min array i localStorage 
+ 
 
   const  addToLocalStorage = () => {
-
-    let todoItems = JSON.stringify(myList);
+   let todoItems = JSON.stringify(myList);
     localStorage.setItem("myList", todoItems);
    }
 
 
 //! funktion getFromLocalStorage
- window.addEventListener("DOMContentLoaded", () => {
-  myList = JSON.parse(localStorage.getItem("myList")).map((addedTask) =>{
-      return new Task(addedTask.taskName, addedTask.taskId, addedTask.checked);
-  });
+function getTodosFromls() {
 
-  createHTML();
-});
-
-//! funktion ta bort en task från localStorage 
-function removeLocalTodos(myList) {
-  let todos;
-  if (localStorage.getItem("myList") === null) {
-    myList = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("myList"));
+    if (localStorage.getItem("myList") === null) {
+      myList = [];
+    } else {
+      myList = JSON.parse(localStorage.getItem("myList"));
+    }
+    createHTML();
   }
-   myList.children[0].innerText;
-  todos.splice(todos.indexOf(myList), 1);
-  localStorage.setItem("myList", JSON.stringify(myList));
-}
 
+  document.addEventListener("DOMContentLoaded", getTodosFromls);
+
+
+  const  clearAllTask = () =>{
  
-  function deleteTask (event){ 
+    localStorage.clear(); //! rensar localStorage 
+    window.location.reload(); //! rensar skärmen 
+    }
+      //! ta bort alla task som finns i todolistan 
+    let deleteAllButton = document.createElement('button');
+    deleteAllButton.innerHTML ="delete all";
+    deleteAllButton.classList.add("top-container__deleteAll_Btn");
+    topContainer.appendChild(deleteAllButton);
+ deleteAllButton.addEventListener("click", clearAllTask);  //! lyssna rensa allt knappen
+
+
+//! ta bort en sak åt gången 
+function removeLocalTodos(index) {
+   myList.splice(index,1)
+   addToLocalStorage();
+
+  }
+
+  const completedTsk = (event) =>{
     let task = event.target; 
-    
+    if(task.classList[0] === 'top-container__container__taskList__todo__doneBtn'){
+      let todo = task.parentElement;
+      todo.classList.toggle('done'); 
+     
+    } 
+  }
+  taskList.addEventListener("click",completedTsk);
+           
+
+function deleteTask (event){ 
+    let task = event.target; 
       if(task.classList[0] === 'top-container__container__taskList__todo__deletBtn'){
         let todo =  task.parentElement;
-        removeLocalTodos(todo);
-          todo.remove();
-       
+        removeLocalTodos(); //! ta bort från localstorage
+          todo.remove(); //! ta bort från skärmen 
       }
-      
-      else if(task.classList[0] === 'top-container__container__taskList__todo__doneBtn'){
-        let todo = task.parentElement;
-      
-        todo.classList.toggle('done'); //! kanske behövs stylas med sass
-      }
-
     }
 
     taskList.addEventListener("click",deleteTask);  //! lyssna delete knappen 
 
 
-    //! denna funtion är till för  ta bort allt som finns i todo listan  och även rensa localStorage
-
-  const  clearAllTask = () =>{
- 
-   localStorage.clear(); //! rensar localStorage 
-   window.location.reload(); //! rensar skärmen 
-        
-   }
-        
-    //! ta bort alla task som finns i todolistan 
-let deleteAllButton = document.createElement('button');
-       deleteAllButton.innerHTML ="delete all";
-       deleteAllButton.classList.add("top-container__deleteAll_Btn");
-       topContainer.appendChild(deleteAllButton);
-
-        deleteAllButton.addEventListener("click", clearAllTask);  //! lyssna rensa allt knappen 
-     
-
- //!returnerade värdet används för att ordna min arrays värden i alfabetiskt:
-
-  function sortMyTaskInAlphabetically() {
-     myList.sort(function (a, b) {
-       if (a.taskName < b.taskName) {
-        return -1;
+ function sortMyTaskInAlphabetically() {
+    myList.sort(function (a, b) {
+      if (a.taskName < b.taskName) {
+       return -1;
+        }
+        else  if (a.taskName > b.taskName) {
+           return 1;
          }
-         else  if (a.taskName > b.taskName) {
-            return 1;
-          }
-          return 0;
-        });
+         return 0;
+       });
 
-        createHTML();
-       addToLocalStorage();  
+       createHTML();
+      addToLocalStorage();  
+     }
   
-      }
+     sortAlphabeticalButton = document.createElement('button'); //! skapar en sort button
+     sortAlphabeticalButton.innerHTML = " Alphabetize";   //! namger
+     sortAlphabeticalButton.classList.add('top-container__sortButton'); //! ger className 
 
-        sortAlphabeticalButton = document.createElement('button'); //! skapar en sort button
-        sortAlphabeticalButton.innerHTML = " Alphabetize";   //! namger
-        sortAlphabeticalButton.classList.add('top-container__sortButton'); //! ger className 
-
-        topContainer.appendChild(sortAlphabeticalButton); //! placerar den i html 
-      
-        sortAlphabeticalButton.addEventListener("click",sortMyTaskInAlphabetically); 
-
-
-//! skapa en funtion som sorterar undone och done todo listorna 
-const selectDiv = document.createElement('div');
- selectDiv.classList.add("top-container__filter")
- topContainer.appendChild(selectDiv);
+     topContainer.appendChild(sortAlphabeticalButton); //! placerar den i top-container div 
+   
+     sortAlphabeticalButton.addEventListener("click",sortMyTaskInAlphabetically); 
  
+ 
+   
+
+
+//! skapa en funtion som filter undone och done todo listorna 
+const selectDiv = document.createElement('div');
+selectDiv.classList.add("top-container__filter")
+topContainer.appendChild(selectDiv);
 
 const select = document.createElement('select');
 select.classList.add("top-container__filter__todoFilter")
@@ -202,9 +190,5 @@ option3.innerText = "uncompleted";
 option3.classList.add("top-container__filter__todoFilter__option")
 select.appendChild(option3)
 
-// select.addEventListener("click", filterTodo);
 
-
-
-    
 

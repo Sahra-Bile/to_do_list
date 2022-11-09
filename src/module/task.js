@@ -5,7 +5,7 @@
  constructor(taskName,taskId,checked){
     this.taskName = taskName;
     this.taskId =  taskId;
-    this.checked = checked;
+    this.checked = false;
 
  }
  
