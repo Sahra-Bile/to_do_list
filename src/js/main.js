@@ -9,12 +9,12 @@ let myList = [];
  let taskInput = document.getElementById('new-task-input'); //! input fältet
  let taskList = document.getElementById('task-list'); //! ul
  let topContainer = document.querySelector('.top-container'); //! secktion
- let container = document.getElementById('todo-container');
 
 
 const createHTML = () =>{
   taskList.innerHTML = "";
-    for(i = 0; i < myList.length; i++){
+
+    for(let i = 0; i < myList.length; i++){
 
  let todoTaskDiv = document.createElement('div'); //! skapar en div
  todoTaskDiv.classList.add('top-container__container__taskList__todo'); //! className
@@ -30,17 +30,18 @@ const createHTML = () =>{
          doneTaskButton.innerHTML = `<i class="fas fa-check"></i>`;
        doneTaskButton.classList.add('top-container__container__taskList__todo__doneBtn'); //! className 
        todoTaskDiv.appendChild(doneTaskButton);
+  
      
-
      let deleteButton = document.createElement('button'); //! skapar en delete button för en task
         deleteButton.innerHTML = `<i class="fas fa-trash"></i>`;
        deleteButton.classList.add('top-container__container__taskList__todo__deletBtn');  
        todoTaskDiv.appendChild(deleteButton); 
 
-      deleteButton.addEventListener("click", ()=>{
-        removeLocalTodos(i)
+       doneTaskButton.addEventListener("click",completedTsk);
+
+       deleteButton.addEventListener("click", ()=>{
+        removeLocalTodos([i])
       });
-    
     }
   console.log(myList);
 }
@@ -70,13 +71,18 @@ function AddNewTodo(event){
    taskForm.appendChild(addTaskButton);
   addTaskButton.addEventListener("click", AddNewTodo);  //! lyssna addTask knappen 
 
- 
 
-  const  addToLocalStorage = () => {
+//! ta bort en sak åt gången från listan
+function removeLocalTodos(index) { //! index = i
+  myList.splice(index ,1)
+  addToLocalStorage();
+ }
+
+//! sparar i localStrage
+  const addToLocalStorage = () => {
    let todoItems = JSON.stringify(myList);
     localStorage.setItem("myList", todoItems);
    }
-
 
 //! funktion getFromLocalStorage
 function getTodosFromls() {
@@ -97,20 +103,13 @@ function getTodosFromls() {
     localStorage.clear(); //! rensar localStorage 
     window.location.reload(); //! rensar skärmen 
     }
-      //! ta bort alla task som finns i todolistan 
+      //! clearAllTask button
     let deleteAllButton = document.createElement('button');
     deleteAllButton.innerHTML ="delete all";
     deleteAllButton.classList.add("top-container__deleteAll_Btn");
     topContainer.appendChild(deleteAllButton);
- deleteAllButton.addEventListener("click", clearAllTask);  //! lyssna rensa allt knappen
+  deleteAllButton.addEventListener("click", clearAllTask);  
 
-
-//! ta bort en sak åt gången 
-function removeLocalTodos(index) {
-   myList.splice(index,1)
-   addToLocalStorage();
-
-  }
 
   const completedTsk = (event) =>{
     let task = event.target; 
@@ -120,20 +119,14 @@ function removeLocalTodos(index) {
      
     } 
   }
-  taskList.addEventListener("click",completedTsk);
-           
-
-function deleteTask (event){ 
+  function deleteTask (event){ 
     let task = event.target; 
       if(task.classList[0] === 'top-container__container__taskList__todo__deletBtn'){
         let todo =  task.parentElement;
-        removeLocalTodos(); //! ta bort från localstorage
           todo.remove(); //! ta bort från skärmen 
       }
     }
-
     taskList.addEventListener("click",deleteTask);  //! lyssna delete knappen 
-
 
  function sortMyTaskInAlphabetically() {
     myList.sort(function (a, b) {
@@ -147,7 +140,7 @@ function deleteTask (event){
        });
 
        createHTML();
-      addToLocalStorage();  
+      addToLocalStorage();  //! efter sortering spara i localStorage dvs byt ut indexof platsten 
      }
   
      sortAlphabeticalButton = document.createElement('button'); //! skapar en sort button
@@ -158,9 +151,6 @@ function deleteTask (event){
    
      sortAlphabeticalButton.addEventListener("click",sortMyTaskInAlphabetically); 
  
- 
-   
-
 
 //! skapa en funtion som filter undone och done todo listorna 
 const selectDiv = document.createElement('div');
@@ -189,6 +179,12 @@ option3.value = "uncompleted";
 option3.innerText = "uncompleted";
 option3.classList.add("top-container__filter__todoFilter__option")
 select.appendChild(option3)
+
+select.addEventListener("click", filterTodo);
+
+function filterTodo(e) {
+ 
+  }
 
 
 
