@@ -122,7 +122,7 @@ function getTodosFromls() {
   function deleteTask (event){ 
     let task = event.target; 
       if(task.classList[0] === 'top-container__container__taskList__todo__deletBtn'){
-        let todo =  task.parentElement;
+        let todo = task.parentElement;
           todo.remove(); //! ta bort från skärmen 
       }
     }
