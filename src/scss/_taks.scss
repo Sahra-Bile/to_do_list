@@ -111,14 +111,13 @@
       width: 15rem;
     }
   }
-}
 
-// //!toggle
-.done {
-  text-decoration: line-through;
-  -webkit-text-decoration: line-through;
-  text-decoration-color: v.$green;
-  -webkit-text-decoration-color: v.$green;
+  &--checked {
+    text-decoration: line-through;
+    -webkit-text-decoration: line-through;
+    text-decoration-color: v.$pink;
+    -webkit-text-decoration-color: v.$pink;
+  }
 }
 
 .fa-trash,
